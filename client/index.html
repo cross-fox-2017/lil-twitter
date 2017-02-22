@@ -14,24 +14,24 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">TweetPedia!</a>
+        <a class="navbar-brand" href="/">TweetPedia!</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
+              <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">@Mention</a>
+              <a class="nav-link" href="/">@Mention</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Message</a>
+              <a class="nav-link" href="/">Message</a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin: 0 3px;">Search</button>
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="margin: 0 3px;">Login</button>
+            <input class="form-control mr-sm-2" type="text" v-model="search" placeholder="Search">
+            <a class="btn btn-outline-primary my-2 my-sm-0" href="#" v-on:click="getTagTweet()" style="margin: 0 3px;">Search</a>
+            <a class="btn btn-outline-danger my-2 my-sm-0" href="#"  style="margin: 0 3px;">Login</a>
           </form>
         </div>
       </nav>

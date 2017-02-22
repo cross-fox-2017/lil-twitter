@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
         message: 'Welcome to TweetPedia',
         allTweet: [],
+        search: '',
         createUser: {
             username: '',
             email: '',
@@ -17,17 +18,24 @@ var app = new Vue({
     methods: {
         getAllTweet: function() {
             axios.get('http://localhost:3000/tweet/getAll').then(function(result) {
-                app.allTweet = result.data
+                app.allTweet = result.data.reverse()
             }).catch(function(err) {
                 console.log(err);
             })
         },
         getTagTweet: function() {
-            axios.get('http://localhost:3000/tweet/find').then(function(result) {
-                app.allTweet = result
-            }).catch(function(err) {
-                console.log(err);
-            })
+          arrTagTweet = app.allTweet
+          app.allTweet = [];
+          for (var i = 0; i < arrTagTweet.length; i++) {
+            if(arrTagTweet[i].tag==app.search){
+              app.allTweet.push(arrTagTweet[i])
+            }
+          }
+            // axios.get('http://localhost:3000/tweet/find').then(function(result) {
+            //     app.allTweet = result
+            // }).catch(function(err) {
+            //     console.log(err);
+            // })
         },
         runcreateUser: function() {
             axios.post('http://localhost:3000/user/add', {
@@ -48,14 +56,13 @@ var app = new Vue({
                     dataTweet: app.createTweet.tweet
                 })
                 .then(function(result) {
-                    app.allTweet.push(result)
+                    app.allTweet.unshift(result.data)
                     app.createTweet.tweet = ''
                 })
                 .catch(function(error) {
                     console.log(error)
                 })
         },
-
         deleteTweet: function(idtweet) {
             axios({
                 method: 'delete',
