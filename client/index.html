@@ -26,7 +26,7 @@
           <!-- <button onclick="ubah()" style="margin-top:20px;" class="ui blue button">Tambah Data</button> -->
           <div class="ui search" style="margin-top:20px">
             <div class="ui icon input">
-              <input class="prompt" type="text" placeholder="Search tweets...">
+              <input class="prompt" type="text" v-model="search" v-on:keyup='searchTweet()'placeholder="Search tweets...">
               <i class="search icon"></i>
             </div>
             <div class="results"></div>
@@ -135,10 +135,20 @@
         tweets: []
       },
       methods: {
-        loadTodo: function() {
+        loadTweet: function() {
           $.ajax({
             type: 'GET',
             url: 'http://localhost:3000/',
+            success: function (data) {
+              app.tweets = data
+            }
+          })
+        },
+
+        searchTweet: function() {
+          $.ajax({
+            type: 'GET',
+            url: 'http://localhost:3000/search?q='+app.search,
             success: function (data) {
               app.tweets = data
             }
@@ -169,7 +179,7 @@
             type: 'DELETE',
             url: 'http://localhost:3000/'+ccc,
             success: function (data) {
-              app.loadTodo();
+              app.loadTweet();
               // alert('Data berhasil dihapus')
             },
             error: function (err) {
@@ -179,7 +189,7 @@
         }
       }
     })
-    app.loadTodo();
+    app.loadTweet();
   </script>
 
 
