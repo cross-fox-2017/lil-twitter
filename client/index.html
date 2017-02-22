@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+
+    <!-- nav -->
+    <nav class="blue">
+      <div class="nav-wrapper">
+        <div class="container">
+          <a href="#" class="brand-logo center">Lil Tweet</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a class="waves-effect orange btn" href="#modal-post">Post Tweet</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- nav -->
+
+    <!-- modal -->
+    <div id="modal-post" class="modal">
+      <div class="modal-content">
+        <h4 class="orange-text">Post your tweet</h4>
+        <!-- input -->
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="username" type="text" class="validate">
+                <label for="icon_prefix">Username</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="material-icons prefix">info</i>
+                <input id="title" type="text" class="validate">
+                <label for="icon_title">Title</label>
+              </div>
+            </div>
+            <div class="row">
+             <form class="col s12">
+               <div class="row">
+                 <div class="input-field col s12">
+                   <input id="content" type="text" class="validate">
+                   <label for="content">Content</label>
+                 </div>
+               </div>
+             </form>
+           </div>
+          </div>
+        </div>
+        <!-- input -->
+      </div>
+      <div class="modal-footer">
+        <a onclick="postTweet()" class=" modal-action modal-close waves-effect green white-text btn-flat">POST NOW</a>
+      </div>
+    </div>
+    <!-- modal -->
+
+    <!-- posting-list -->
+    <div class="container">
+
+      <!-- search input -->
+      <div class="row">
+        <div class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="search" type="text" class="validate" oninput="search()">
+              <label for="search">Search</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- search input -->
+
+      <div id="tweet-list">
+        <div id="remove-list">
+        </div>
+      </div>
+    </div>
+
+    <!-- posting-list -->
+
+    <!--Import jQuery before materialize.js-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.modal').modal();
+        getAllTweet()
+      });
+
+      function getAllTweet(){
+        $.ajax({
+          url: "http://localhost:3000/api/tweets",
+          type: 'get',
+          success: function( result ) {
+            var tmp = "";
+            for (var i = 0; i < result.length; i++) {
+              tmp +=
+              `
+              <div class="row" id="${result[i]._id}">
+                <div class="col s12">
+                  <div class="card darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title black-text">${result[i].title}</span>
+                      <p class="black-text">${result[i].content}</p>
+                      <p class="right black-text">Post By : <i class="blue-text">${result[i].postBy}</i></p>
+                    </div>
+                    <div class="card-action">
+                      <a onclick="deletePost('${result[i]._id}')">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              `
+            }
+            $('#remove-list').prepend(tmp)
+          } // success
+        });
+      }
+
+      function postTweet(){
+        $.ajax({
+          url: "http://localhost:3000/api/tweets",
+          type: 'post',
+          data: {
+            postBy: $('#username').val(),
+            title: $('#title').val(),
+            content: $('#content').val()
+          },
+          success: function( result ) {
+            console.log(result);
+            let temp =
+            `
+            <div class="row" id="${result._id}">
+              <div class="col s12">
+                <div class="card darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title black-text">${result.title}</span>
+                    <p class="black-text">${result.content}</p>
+                    <p class="right black-text">Post By : <i class="blue-text">${result.postBy}</i></p>
+                  </div>
+                  <div class="card-action">
+                    <a onclick="deletePost('${result._id}')">Delete</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `
+            $('#remove-list').prepend(temp)
+            $('#username').val('')
+            $('#title').val('')
+            $('#content').val('')
+          }
+        });
+      }
+
+      function deletePost(inputid){
+        $.ajax({
+          url: "http://localhost:3000/api/tweets",
+          type: 'delete',
+          data: {
+            id: inputid,
+          },
+          success: function( result ) {
+            $(`#${result._id}`).remove()
+          }
+        });
+      }
+
+      function search(){
+        let x = document.getElementById("search").value;
+        console.log('masuk');
+        console.log(x);
+        if (x == null) {
+          getAllTweet()
+        }
+
+        $.ajax({
+          url: "http://localhost:3000/api/tweets/search",
+          type: 'post',
+          data: {
+            title: x,
+          },
+          success: function( result ) {
+            var tmp = "";
+            $(`#remove-list div`).remove()
+            for (var i = 0; i < result.length; i++) {
+              tmp +=
+              `
+              <div class="row" id="${result[i]._id}">
+                <div class="col s12">
+                  <div class="card darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title black-text">${result[i].title}</span>
+                      <p class="black-text">${result[i].content}</p>
+                      <p class="right black-text">Post By : <i class="blue-text">${result[i].postBy}</i></p>
+                    </div>
+                    <div class="card-action">
+                      <a onclick="deletePost('${result[i]._id}')">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              `
+            }
+            $('#remove-list').prepend(tmp)
+          } // success
+        });
+      }
+    </script>
+  </body>
+</html>
