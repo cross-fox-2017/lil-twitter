@@ -14,7 +14,6 @@
   </head>
   <body>
     <div id="app">
-      <h1>{{message}}</h1>
       <div class="ui container">
         <div class="ui grid container">
           <form class="ui form">
@@ -22,7 +21,14 @@
               <label>Post New Twit</label>
               <input name="twitNew" placeholder="Post New Twit" type="text" v-model="twitNew">
             </div>
-            <button class="ui button" v-on:click="postTwitNew()">Twit</button>
+            <button class="ui button" v-on:click="postTwitNew(e)"><i class="icon twitter"></i>Twit</button>
+          </form>
+          <form class="ui form">
+            <div class="field">
+              <label>Search Twit</label>
+              <input name="searchTwit" placeholder="Search Twit" type="text" v-model="searchTwit">
+            </div>
+            <button class="ui button" v-on:click="SearchTwit(e)"><i class="icon search"></i>Search</button>
           </form>
         </div>
         <div class="ui container">

@@ -5,6 +5,7 @@ var twitsController = require('../controllers/twitsController.js');
 router.get('/', twitsController.list);
 router.get('/:id', twitsController.show);
 router.post('/', twitsController.create);
+router.post('/search', twitsController.search);
 router.put('/:id', twitsController.update);
 router.delete('/:id', twitsController.remove);
 

@@ -80,5 +80,16 @@ module.exports = {
             }
             return res.status(204).json();
         });
+    },
+    search: function (req, res) {
+        twitModel.find({content: {$regex: new RegExp(req.body.search, "ig")}}, function(err, twits){
+            if (err) {
+                return res.status(500).json({
+                    massage: 'Search does not match any twit',
+                    error: err
+                });
+            }
+            return res.status(201).json(twits)
+        })
     }
 };
