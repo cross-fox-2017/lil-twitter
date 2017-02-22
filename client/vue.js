@@ -3,15 +3,19 @@ var app = new Vue({
   data: {
     twitNew: '',
     twitSearch: '',
+    newHastag: '',
     twits: []
   },
   methods: {
     postTwitNew: function(){
       axios.post('http://localhost:3000/api/twits', {
-        content: app.twitNew
+        content: app.twitNew,
+        hashtag: app.newHastag.split(' ').map(function(tag){
+          return '#'+tag
+        })
       })
       .then(function(twit){
-        twits.push(twit.data)
+        app.twits.push(twit.data)
       })
     },
     listTwit: function(){

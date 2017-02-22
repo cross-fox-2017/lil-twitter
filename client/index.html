@@ -33,20 +33,28 @@
       <div class="ui container">
         <div class="ui grid container">
           <div class="ui form">
-            <div class="ui two wide column">
+            <div class="ui one wide column">
               <div class="inline field">
                 <label>Post New Twit</label>
                 <textarea rows="2" placeholder="Post New Twit" v-model="twitNew"></textarea>
+                <input type="text" v-model="newHastag">
               </div>
               <button class="ui button" v-on:click="postTwitNew()"><i class="icon twitter"></i>Twit</button>
             </div>
           </div>
-          <div class="ui container eight wide column">
+          <div class="ui container ten wide column">
             <div class="ui items">
               <div v-for="twit in twits" class="item" v-bind:id="twit._id">
+                <div class="ui small image">
+                  <img src="./users.png">
+                </div>
                 <div class="content">
                   <div class="description">
                     <h1>{{twit.content}}</h1>
+                  </div>
+                  <div class="extra">
+                    <p>{{twit.hashtag.toString().replace(/,/g,' ')}}</p>
+                    <p>twits at {{twit.createdAt}}</p>
                   </div>
                 </div>
               </div>

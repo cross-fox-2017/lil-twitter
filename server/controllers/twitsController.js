@@ -30,7 +30,7 @@ module.exports = {
         });
     },
     create: function (req, res) {
-        var twit = new twitModel({			content : req.body.content,			hashtag : req.body.hashtag,			createdAt : req.body.createdAt,			userid : req.body.userid
+        var twit = new twitModel({			content : req.body.content,			hashtag : req.body.hashtag,			createdAt : new Date(),			userid : req.body.userid
         });
 
         twit.save(function (err, twit) {
