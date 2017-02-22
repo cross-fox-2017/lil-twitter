@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 var tweetSchema = new Schema({
   tweet: String,
-  tag: String
+  tag: []
 },{
   timestamps: true
 })
