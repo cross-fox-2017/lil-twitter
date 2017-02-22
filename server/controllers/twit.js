@@ -9,6 +9,7 @@ module.exports = {
         tempContent[i]=`<a href="#" onclick="searchHashtag('${datalagi}')">${tempContent[i]}</a>`
       }
     }
+    tempContent = tempContent.join(' ')
 
     Twit.create({
       avatar_url     : req.body.avatar_url,
