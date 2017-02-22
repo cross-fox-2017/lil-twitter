@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My SosMed</title>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="ui inverted menu">
+        <div class="ui container">
+          <a href="#" class="header item">
+            <i class="feed icon"></i>
+            My lil Twit
+          </a>
+          <div class="right menu">
+            <div class="ui form">
+              <div class="inline field">
+                <input name="searchTwit" placeholder="Search Twit" type="text" v-model="twitSearch">
+                <button class="ui button" v-on:click="searchTwit()"><i class="icon search"></i>Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui container">
+        <div class="ui grid container">
+          <div class="ui form three wide column">
+            <div class="field">
+              <label>Post New Twit</label>
+              <textarea rows="2" placeholder="Post New Twit" v-model="twitNew"></textarea>
+              <input type="text" placeholder="hashtag" v-model="newHastag">
+            </div>
+            <button class="ui button" v-on:click="postTwitNew()"><i class="icon twitter"></i>Twit</button>
+          </div>
+          <div class="ui container nine wide column">
+            <div class="ui items">
+              <div v-for="twit in twits" class="item" v-bind:id="twit._id">
+                <div class="ui small image">
+                  <img src="./users.png">
+                </div>
+                <div class="content">
+                  <div class="description">
+                    <h1>{{twit.content}}</h1>
+                  </div>
+                  <div class="extra">
+                    <p>{{twit.hashtag.toString().replace(/,/g,' ')}}</p>
+                    <p>twits at {{twit.createdAt}}</p>
+                    <button class="ui button negative" v-on:click="deleteTwit(twit._id)"><i class="icon trash"></i>delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="vue.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
