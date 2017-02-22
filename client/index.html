@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href=https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.css>
+    <link rel="stylesheet" type="text/css" href=https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.8/components/modal.css>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.8/semantic.js"></script>
+    <script scr="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.8/components/modal.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link href='//fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <title></title>
+  </head>
+  <body>
+    <div id="root" class="ui container">
+      <div class="ui grid row">
+        <div class="three wide column">
+        </div>
+        <div class="two wide column">
+          <img src="https://d13yacurqjgara.cloudfront.net/users/11380/screenshots/2510873/bird.png" alt="">
+        </div>
+        <div class="five wide column">
+          <h1 style="font-size: 58px;">YoumaTweet</h1>
+        </div>
+        <div class="three wide column">
+          <!-- <button onclick="ubah()" style="margin-top:20px;" class="ui blue button">Tambah Data</button> -->
+          <div class="ui search" style="margin-top:20px">
+            <div class="ui icon input">
+              <input class="prompt" type="text" placeholder="Search tweets...">
+              <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
+          </div>
+        </div>
+      </div>
+      <!-- <hr> -->
+      <div class="ui basic ">
+        <div class="ui grid">
+          <div class="four wide column">
+            <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/-Insert_image_here-.svg/2000px--Insert_image_here-.svg.png" alt=""> -->
+          </div>
+          <div class="eight wide column">
+            <form class="ui form segment">
+
+              <div class="row ui grid">
+                <div class="field eight wide column">
+                  <label>avatar_url</label>
+                  <input type="text" v-model="avatar_url">
+                </div>
+                <div class="field eight wide column">
+                  <label>username</label>
+                  <input type="text" v-model="username">
+                </div>
+              </div>
+              <div class="field">
+                <label>content</label>
+                <textarea v-model="content" rows="2"></textarea>
+              </div>
+
+              <!-- <button v-on:click="addHouse($event)" class="ui blue button">Submit</button> -->
+              <button v-on:click="addTweet($event)" class="ui twitter button">
+                <i class="write icon"></i>
+                Tweet
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- <hr> -->
+      <!-- <div v-for="house in tweets" class="row ui grid raised segment"> -->
+      <div v-for="tweet in tweets" class="row ui grid">
+        <div class="four wide column">
+          <!-- <img :src="house.gambar" alt=""> -->
+        </div>
+        <div class="eight wide column">
+          <div class="ui segment row grid">
+            <div class="three wide column">
+              <img :src="tweet.avatar_url" alt="">
+            </div>
+            <div class="ten wide column">
+              <h4>{{tweet.username}}</h4>
+              <p style="font-size:16px">{{tweet.content}}</p>
+              <i class="trash icon" onclick="hapus()" v-on:click='deleteTweet(tweet._id)' ></i>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui basic modal">
+        <div class="ui icon header">
+          <div>
+            <i class="trash icon"></i>
+            Your tweet has been deleted
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+
+
+  </body>
+
+  <script type="text/javascript">
+    // function editmodal(){
+    //   $('.ui.modal').modal('show');
+    // };
+
+     function hapus(){
+       $('.ui.basic.modal').modal('show');
+     };
+
+     function closehapus(){
+       $('.ui.basic.modal').modal('hide');
+     };
+
+  </script>
+
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+
+
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#root',
+      data: {
+        // index:'',
+        avatar_url: '',
+        username: '',
+        content: '',
+        tweets: []
+      },
+      methods: {
+        loadTodo: function() {
+          $.ajax({
+            type: 'GET',
+            url: 'http://localhost:3000/',
+            success: function (data) {
+              app.tweets = data
+            }
+          })
+        },
+
+        addTweet: function(event) {
+          if (event) event.preventDefault()
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/',
+            data : {
+              avatar_url: "https://pbs.twimg.com/profile_images/831659029050953728/gsdRN4K6.jpg",
+              username: app.username,
+              content: app.content
+            },
+            success: function (data) {
+              app.avatar_url= ''
+              app.username= ''
+              app.content= ''
+              app.tweets.push(data)
+
+            }
+          })
+        },
+        deleteTweet: function (ccc) {
+          $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:3000/'+ccc,
+            success: function (data) {
+              app.loadTodo();
+              // alert('Data berhasil dihapus')
+            },
+            error: function (err) {
+              console.log(err)
+            }
+          })
+        }
+      }
+    })
+    app.loadTodo();
+  </script>
+
+
+
+</html>
