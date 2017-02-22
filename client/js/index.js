@@ -16,13 +16,20 @@ var app = new Vue({
   },
   methods: {
     getAllTweet: function() {
-      axios.get('http://localhost:3000/tweet/getAll',).then(function(result) {
+      axios.get('http://localhost:3000/tweet/getAll').then(function(result) {
+        app.allTweet = result.data
+      }).catch(function(err) {
+          console.log(err);
+      })
+    },
+    getTagTweet: function() {
+      axios.get('http://localhost:3000/tweet/find').then(function(result) {
         app.allTweet = result
       }).catch(function(err) {
           console.log(err);
       })
     },
-    createUser: function () {
+    runcreateUser: function () {
       axios.post('http://localhost:3000/user/add', {
         dataUser: app.createUser,
       })
@@ -36,16 +43,20 @@ var app = new Vue({
           console.log(error)
         })
     },
-    createTweet: function() {
+    runcreateTweet: function() {
       axios.post('http://localhost:3000/tweet/add', {
-        dataUser: app.createTweet,
+        dataTweet: app.createTweet.tweet
       })
         .then(function (result) {
+          app.allTweet.push(result)
           app.createTweet.tweet = ''
         })
         .catch(function (error) {
           console.log(error)
         })
     }
+
   }
 })
+
+app.getAllTweet()

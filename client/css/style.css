@@ -1,0 +1,12 @@
+#status-form{
+  background-color: rgba(237, 237, 237, 0.32)
+}
+
+img.card-img-top.boxUser{
+  height: 185px;
+}
+
+img.card-img-top.tweet{
+  width: 120px;
+  height: 110px;
+}

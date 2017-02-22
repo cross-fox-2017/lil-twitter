@@ -4,14 +4,18 @@ var modelTweet = require('../models/tweet')
 
 
 router.post('/add', function(req, res, next) {
-  var getTag = req.body.tweet.match(/\S*#(?:\[[^\]]+\]|\S+)/g)
+  var getTag = req.body.dataTweet.match(/\S*#(?:\[[^\]]+\]|\S+)/g)
   var addTweet = new modelTweet({
-    tweet: req.body.tweet,
-    tag: getTag
+    tweet: req.body.dataTweet,
+    tag: getTag || ""
   })
   addTweet.save(function(err, result) {
-    if(err)res.send(err)
-    else res.send(result)
+    if(err){
+      res.send(err)
+    }
+    else{
+      res.send(result)
+    }
   })
 });
 
@@ -35,7 +39,7 @@ router.post('/find', function(req, res, next) {
 });
 
 router.get('/getAll', function(req, res, next) {
-  modelTweet.find({},function(result) {
+  modelTweet.find({},function(err, result) {
     res.send(result)
   })
 });

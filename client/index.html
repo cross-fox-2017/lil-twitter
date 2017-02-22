@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>TweetPedia</title>
+  </head>
+  <body>
+    <div id="app" class="container">
+
+      <!-- NAVBAR starts here-->
+      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">TweetPedia!</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">@Mention</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Message</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin: 0 3px;">Search</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="margin: 0 3px;">Login</button>
+          </form>
+        </div>
+      </nav>
+      <!-- NAVBAR ends here-->
+
+      <div class="row">
+        <div class="col-3">
+          <div class="card" style="width: 17rem;">
+            <img class="card-img-top boxUser" src="http://profilbos.com/wp-content/uploads/2016/05/Biografi-Chelsea-Islan.jpg" alt="Card image cap">
+            <div class="card-block">
+              <h4 class="card-title">@ChelseaIslan</h4>
+              <p class="card-text">Lagi Pengen Makan</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-9">
+          <!-- body -->
+          <div class="card">
+            <div class="card-block">
+
+              <!-- Create tweet-->
+              <div id="status-form" class="card">
+                <div class="card-block">
+                  <form>
+                    <div class="form-group">
+                      <textarea type="text" class="form-control" id="tweet" v-model="createTweet.tweet" placeholder="What's Happening?"></textarea>
+                      <br>
+                        <a class="btn btn-primary my-2 my-sm-0 float-right" v-on:click="runcreateTweet()" href="#" style="margin: 3px;">Post Tweet</a>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <br>
+
+              <!-- Timeline -->
+              <div id="listTweet" v-for="showTweet in allTweet">
+                <div class="card timeline">
+                  <div class="card-block">
+                      <div class="row">
+                        <div class="col-2">
+                            <img class="card-img-top tweet" src="http://profilbos.com/wp-content/uploads/2016/05/Biografi-Chelsea-Islan.jpg" style="margin: 5px 0px" alt="Card image cap">
+                        </div>
+                        <div class="col-10">
+                            <div class="card-block">
+                              <h6 class="card-subtitle mb-2 text-muted">@chelseaislan</h6>
+                              <p class="card-text">{{showTweet.tweet}}</p>
+                              <a href="#" class="card-link float-right">Delete</a>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
+
+
+  </body>
+</html>

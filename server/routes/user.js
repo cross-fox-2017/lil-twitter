@@ -5,11 +5,10 @@ var modelUser = require('../models/user')
 
 router.post('/add', function(req, res, next) {
   var addUser = new modelUser({
-    username: req.body.dataUser.username,
-    email: req.body.dataUser.email,
-    password: req.body.dataUser.password,
-    imageUrl: req.body.dataUser.imageUrl,
-    tweetID: []
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+    imageUrl: req.body.imageUrl
   })
   addUser.save(function(err, result) {
     if(err)res.send(err)

@@ -8,7 +8,7 @@ var userSchema = new Schema({
   password: String,
   imageUrl: String,
   tweetID: [{
-    type: Schema.Type.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Tweet"
   }]
 },{
