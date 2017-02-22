@@ -89,7 +89,7 @@ module.exports = {
                     error: err
                 });
             }
-            return res.status(201).json(twits)
+            return res.json(twits)
         })
     }
 };

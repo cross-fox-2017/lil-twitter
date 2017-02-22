@@ -2,12 +2,11 @@ var app = new Vue({
   el: '#app',
   data: {
     twitNew: '',
-    searchTwit: '',
+    twitSearch: '',
     twits: []
   },
   methods: {
-    postTwitNew: function(e){
-      e.preventDefault()
+    postTwitNew: function(){
       axios.post('http://localhost:3000/api/twits', {
         content: app.twitNew
       })
@@ -21,10 +20,9 @@ var app = new Vue({
         app.twits = response.data
       })
     },
-    searchTwit: function(e){
-      e.preventDefault()
+    searchTwit: function(){
       axios.post('http://localhost:3000/api/twits/search', {
-        search: app.searchTwit
+        search: app.twitSearch
       })
       .then(function(response){
         app.twits = response.data

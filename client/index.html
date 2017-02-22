@@ -21,25 +21,26 @@
             My lil Twit
           </a>
           <div class="right menu">
-            <form class="ui form">
+            <div class="ui form">
               <div class="inline field">
-                <label>Search Twit</label>
-                <input name="searchTwit" placeholder="Search Twit" type="text" v-model="searchTwit">
-                <button class="ui button" v-on:click="SearchTwit(e)"><i class="icon search"></i>Search</button>
+                <input name="searchTwit" placeholder="Search Twit" type="text" v-model="twitSearch">
+                <button class="ui button" v-on:click="searchTwit()"><i class="icon search"></i>Search</button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
       <div class="ui container">
         <div class="ui grid container">
-          <form class="ui form two wide column">
-            <div class="inline field">
-              <label>Post New Twit</label>
-              <input name="twitNew" placeholder="Post New Twit" type="text" v-model="twitNew">
-              <button class="ui button" v-on:click="postTwitNew(e)"><i class="icon twitter"></i>Twit</button>
+          <div class="ui form">
+            <div class="ui two wide column">
+              <div class="inline field">
+                <label>Post New Twit</label>
+                <textarea rows="2" placeholder="Post New Twit" v-model="twitNew"></textarea>
+              </div>
+              <button class="ui button" v-on:click="postTwitNew()"><i class="icon twitter"></i>Twit</button>
             </div>
-          </form>
+          </div>
           <div class="ui container eight wide column">
             <div class="ui items">
               <div v-for="twit in twits" class="item" v-bind:id="twit._id">
