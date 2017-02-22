@@ -80,7 +80,7 @@
             <div class="ten wide column">
               <h4>{{tweet.username}}</h4>
               <p style="font-size:16px">{{tweet.content}}</p>
-              <i class="trash icon" onclick="hapus()" v-on:click='deleteTweet(tweet._id)' ></i>
+              <i class="trash icon" style="color:gray" onclick="hapus()" v-on:click='deleteTweet(tweet._id)' ></i>
 
             </div>
           </div>
@@ -90,7 +90,7 @@
       <div class="ui basic modal">
         <div class="ui icon header">
           <div>
-            <i class="trash icon"></i>
+            <i class="trash icon" ></i>
             Your tweet has been deleted
           </div>
         </div>
@@ -152,7 +152,7 @@
             url: 'http://localhost:3000/',
             data : {
               avatar_url: "https://pbs.twimg.com/profile_images/831659029050953728/gsdRN4K6.jpg",
-              username: app.username,
+              username: "yomaswn",
               content: app.content
             },
             success: function (data) {

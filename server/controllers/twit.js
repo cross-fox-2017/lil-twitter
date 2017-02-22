@@ -17,6 +17,13 @@ module.exports = {
     })
   },
 
+  search : function(req, res, next) {
+    var kata = req.query.q
+    Twit.find({ content: { $regex: kata, $options: 'i' } }, function (err, data){
+      res.send(data);
+    })
+  },
+
   delete : function(req, res, next) {
     Twit.remove({_id: req.params.id}, function (err, data){
         if (err) throw err
