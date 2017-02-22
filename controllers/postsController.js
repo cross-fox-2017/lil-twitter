@@ -93,7 +93,7 @@ module.exports = {
   search: function (req, res) {
     let tweet = req.query.q
 
-    postsModel.find({ post: { $regex: tweet, $options: 'i' }, tag: { $regex: tweet, $options: 'i' }}, function (err, posts) {
+    postsModel.find({ post: { $regex: tweet, $options: 'i' }}, function (err, posts) {
       if (err) {
         return res.status(500).json({
           message: 'Error when search posts.',

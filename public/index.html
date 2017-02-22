@@ -186,8 +186,9 @@
         url: 'http://localhost:3000/api/posts/search?q='+searchInput,
         dataType: 'json',
         success: function(res){
+          $('#post_content').html('')
           res.forEach(function(post, i){
-            $('#post_content').html(
+            $('#post_content').append(
               `
                 <div class="col s12" id="content_row_${i}">
                   <div class="card horizontal">
