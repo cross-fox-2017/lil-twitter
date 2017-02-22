@@ -32,7 +32,7 @@ module.exports = {
   },
 
   create: function (req, res) {
-    var posts = new postsModel({      post: req.body.post,      userId: req.body.userId,      tag: req.body.tag,      createdAt: req.body.createdAt
+    var posts = new postsModel({      post: req.body.post,      userId: req.body.userId,      tag: req.body.tag,      createdAt: new Date()
     })
 
     posts.save(function (err, posts) {
@@ -61,7 +61,8 @@ module.exports = {
         })
       }
 
-      posts.post = req.body.post ? req.body.post : posts.post;      posts.userId = req.body.userId ? req.body.userId : posts.userId;      posts.tag = req.body.tag ? req.body.tag : posts.tag;      posts.createdAt = req.body.createdAt ? req.body.createdAt : posts.createdAt
+      posts.post = req.body.post || posts.post;      posts.userId = req.body.userId || posts.userId;      posts.tag = req.body.tag || posts.tag;      posts.createdAt = new Date() || posts.createdAt
+
       posts.save(function (err, posts) {
         if (err) {
           return res.status(500).json({
@@ -84,7 +85,22 @@ module.exports = {
           error: err
         })
       }
-      return res.status(204).json()
+      return res.status(201).json(posts)
+    })
+  },
+
+  search: function (req, res) {
+    let tweet = req.query.q
+    console.log(tweet)
+
+    postsModel.find({ 'post': { '$regex': tweet, $options: 'i' }}, function (err, posts) {
+      if (err) {
+        return res.status(500).json({
+          message: 'Error when search posts.',
+          error: err
+        })
+      }
+      return res.json(posts)
     })
   }
 }

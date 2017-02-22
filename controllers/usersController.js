@@ -32,7 +32,7 @@ module.exports = {
   },
 
   create: function (req, res) {
-    var users = new usersModel({      username: req.body.username,      password: req.body.password,      avatar: req.body.avatar,      createdAt: req.body.createdAt
+    var users = new usersModel({      username: req.body.username,      password: req.body.password,      avatar: req.body.avatar,      createdAt: new Date()
     })
 
     users.save(function (err, users) {
@@ -61,7 +61,8 @@ module.exports = {
         })
       }
 
-      users.username = req.body.username ? req.body.username : users.username;      users.password = req.body.password ? req.body.password : users.password;      users.avatar = req.body.avatar ? req.body.avatar : users.avatar;      users.createdAt = req.body.createdAt ? req.body.createdAt : users.createdAt
+      users.username = req.body.username || users.username;      users.password = req.body.password || users.password;      users.avatar = req.body.avatar || users.avatar;      users.createdAt = new Date() || users.createdAt
+
       users.save(function (err, users) {
         if (err) {
           return res.status(500).json({
@@ -87,4 +88,5 @@ module.exports = {
       return res.status(204).json()
     })
   }
+
 }
