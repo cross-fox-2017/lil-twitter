@@ -20,9 +20,8 @@ router.post('/add', function(req, res, next) {
 });
 
 router.delete('/delete', function(req, res, next) {
-  modelTweet.findByIdAndRemove(req.body.id, function(err) {
-    if(err)res.send(err)
-    else res.send("Tweet Removed")
+  modelTweet.findByIdAndRemove(req.body.id, function(result) {
+    res.send(req.body.id)
   })
 });
 
