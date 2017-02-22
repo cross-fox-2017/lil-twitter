@@ -8,7 +8,7 @@
 | api/twits/         | POST   | Post new twit     |
 | api/twits/:id      | DELETE | delete twit       |
 | api/users          | GET    | get list users    |
-| api/users/register | POST   | register new user |
+| api/users/         | POST   | register new user |
 | api/users/login    | POST   | login user        |
 |                    |        |                   |
 

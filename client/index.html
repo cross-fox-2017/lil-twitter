@@ -15,6 +15,28 @@
   <body>
     <div id="app">
       <h1>{{message}}</h1>
+      <div class="ui container">
+        <div class="ui grid container">
+          <form class="ui form">
+            <div class="field">
+              <label>Post New Twit</label>
+              <input name="twitNew" placeholder="Post New Twit" type="text" v-model="twitNew">
+            </div>
+            <button class="ui button" v-on:click="postTwitNew()">Twit</button>
+          </form>
+        </div>
+        <div class="ui container">
+          <div class="ui items">
+            <div v-for="twit in twits" class="item" v-bind:id="twit._id">
+              <div class="content">
+                <div class="description">
+                  <h1>{{twit.content}}</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="vue.js"></script>
     <script src="index.js"></script>
