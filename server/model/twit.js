@@ -5,7 +5,8 @@ var twitSchema = new Schema({
   avatar_url     : String,
   username     : String,
   content    : String,
-  {timestamp: true}
+},{
+  timestamps: true
 });
 
 module.exports = mongoose.model('twit', twitSchema);

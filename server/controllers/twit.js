@@ -20,7 +20,7 @@ module.exports = {
   delete : function(req, res, next) {
     Twit.remove({_id: req.params.id}, function (err, data){
         if (err) throw err
-      res.send({message:`rumah dengan id ${req.params.id} berhasil dihapus`})
+      res.send({message:`twit dengan id ${req.params.id} berhasil dihapus`})
     })
   },
 

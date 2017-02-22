@@ -4,9 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+
+const cors = require('cors');
+
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/yoma-twit')
+const db = mongoose.connection
+
+db.on("error", console.error.bind(console, "koneksi bermasalah"))
+db.once("open", function(callback){
+  console.log("koneksi database menggunakan mongoose");
+})
 
 var app = express();
 
