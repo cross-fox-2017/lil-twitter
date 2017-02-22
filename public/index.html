@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Lil Twitter</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Home</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Home</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col s3">
+
+        </div>
+        <div class="col s6">
+          <div class="row">
+            <form class="col s12">
+              <div class="row">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">mode_edit</i>
+                  <textarea id="input_post" placeholder="Post new tweet" class="materialize-textarea"></textarea>
+                </div>
+                <div class="input-field col s5 offset-s1">
+                  <button id="submit_post" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Post</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="row">
+
+            <div class="input-field col s6 offset-s1">
+              <input placeholder="Search Tweet" id="search_post" type="text" class="validate">
+            </div>
+            <div class="input-field col s5">
+              <button id="submit_search" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Search</button>
+            </div>
+          </div>
+          <div id="post_content">
+
+          </div>
+
+        </div>
+        <div class="col s3">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script>
+  let index = 0
+
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/posts',
+      dataType: 'json',
+      success: function(res){
+        res.forEach(function(post, i){
+          $('#post_content').append(
+            `
+              <div class="col s12" id="content_row_${index}">
+                <div class="card horizontal">
+                  <div class="card-image">
+                    <img src="http://lorempixel.com/100/100/nature/1">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <p>${post.post}</p>
+                    </div>
+                    <div class="card-action">
+                      <ul id="get_tags_${i}">
+                      </ul>
+                      <button onclick="delete_button('${post._id}', ${index})" class="waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `
+          )
+
+          post.tag.forEach(function(tag){
+            $(`#get_tags_${i}`).append(
+              `
+                <li>${tag}</li>
+              `
+            )
+          })
+          index++
+        })
+      }
+    })
+
+    $('#submit_post').click(function(e){
+      e.preventDefault()
+      let posting = $('#input_post').val()
+      let tags = posting.match(/#\w+/g)
+
+      console.log(posting);
+      console.log(tags);
+
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/api/posts',
+        dataType: 'json',
+        data: {
+          post: posting,
+          tag: JSON.stringify(tags),
+          userId: "asfasf34125dfs"
+        },
+        success: function(res){
+          console.log(res);
+          $('#post_content').append(
+            `
+              <div class="col s12" id="content_row_${index}">
+                <div class="card horizontal">
+                  <div class="card-image">
+                    <img src="http://lorempixel.com/100/100/nature/1">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <p>${res.post}</p>
+                    </div>
+                    <div class="card-action">
+                      <ul id="get_tags_${index}">
+                      </ul>
+                      <button onclick="delete_button('${res._id}', ${index})" class="waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `
+          )
+          res.tag.forEach(function(tag){
+            $(`#get_tags_${index}`).append(
+              `
+                <li>${tag}</li>
+              `
+            )
+          })
+          index++
+        }
+      })
+    })
+
+    function delete_button(id, i){
+      $.ajax({
+        type: 'DELETE',
+        url: 'http://localhost:3000/api/posts/'+id,
+        dataType: 'json',
+        success: function(res){
+          $('#content_row_'+i).remove()
+        }
+      })
+    }
+
+    $('#submit_search').click(function(e){
+      e.preventDefault()
+      let searchInput = $('#search_post').val()
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/api/posts/search?q='+searchInput,
+        dataType: 'json',
+        success: function(res){
+          res.forEach(function(post, i){
+            $('#post_content').html(
+              `
+                <div class="col s12" id="content_row_${i}">
+                  <div class="card horizontal">
+                    <div class="card-image">
+                      <img src="http://lorempixel.com/100/100/nature/1">
+                    </div>
+                    <div class="card-stacked">
+                      <div class="card-content">
+                        <p>${post.post}</p>
+                      </div>
+                      <div class="card-action">
+                        <ul id="get_tags_${i}">
+                        </ul>
+                        <button onclick="delete_button('${post._id}', ${i})" class="waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `
+            )
+
+            post.tag.forEach(function(tag){
+              $(`#get_tags_${i}`).append(
+                `
+                  <li>${tag}</li>
+                `
+              )
+            })
+
+          })
+        }
+      })
+    })
+
+  </script>
+  </body>
+</html>

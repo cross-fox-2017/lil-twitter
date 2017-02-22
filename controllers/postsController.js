@@ -32,7 +32,8 @@ module.exports = {
   },
 
   create: function (req, res) {
-    var posts = new postsModel({      post: req.body.post,      userId: req.body.userId,      tag: req.body.tag,      createdAt: new Date()
+    let tags = JSON.parse(req.body.tag)
+    var posts = new postsModel({      post: req.body.post,      userId: req.body.userId,      tag: tags,      createdAt: new Date()
     })
 
     posts.save(function (err, posts) {
@@ -91,9 +92,8 @@ module.exports = {
 
   search: function (req, res) {
     let tweet = req.query.q
-    console.log(tweet)
 
-    postsModel.find({ 'post': { '$regex': tweet, $options: 'i' }}, function (err, posts) {
+    postsModel.find({ post: { $regex: tweet, $options: 'i' }, tag: { $regex: tweet, $options: 'i' }}, function (err, posts) {
       if (err) {
         return res.status(500).json({
           message: 'Error when search posts.',
