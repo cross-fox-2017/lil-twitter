@@ -5,12 +5,13 @@ User can post and delete a post. Including a search by keyword
 # API
 ## Posts API
 
-| Routes         | Method  | Description   
-| -------------  |---------| ---------------
-| `api/post`     | GET     | GET all posts
-| `api/post`     | POST    | Posting
-| `api/post/:id` | DELETE  | Delete a post
-| `api/post/:id` | GET     | Get a post
+| Routes                    | Method  | Description   
+| ------------------------- |---------| ---------------
+| `api/post`                | GET     | GET all posts
+| `api/post`                | POST    | Posting
+| `api/post/:id`            | DELETE  | Delete a post
+| `api/post/:id`            | GET     | Get a post
+| `api/post/search/:search` | GET     | Search a post by post content and tag
 
 ## Users API
 
