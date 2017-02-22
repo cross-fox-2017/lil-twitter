@@ -32,17 +32,15 @@
       </div>
       <div class="ui container">
         <div class="ui grid container">
-          <div class="ui form">
-            <div class="ui one wide column">
-              <div class="inline field">
-                <label>Post New Twit</label>
-                <textarea rows="2" placeholder="Post New Twit" v-model="twitNew"></textarea>
-                <input type="text" v-model="newHastag">
-              </div>
-              <button class="ui button" v-on:click="postTwitNew()"><i class="icon twitter"></i>Twit</button>
+          <div class="ui form three wide column">
+            <div class="field">
+              <label>Post New Twit</label>
+              <textarea rows="2" placeholder="Post New Twit" v-model="twitNew"></textarea>
+              <input type="text" placeholder="hashtag" v-model="newHastag">
             </div>
+            <button class="ui button" v-on:click="postTwitNew()"><i class="icon twitter"></i>Twit</button>
           </div>
-          <div class="ui container ten wide column">
+          <div class="ui container nine wide column">
             <div class="ui items">
               <div v-for="twit in twits" class="item" v-bind:id="twit._id">
                 <div class="ui small image">
@@ -55,6 +53,7 @@
                   <div class="extra">
                     <p>{{twit.hashtag.toString().replace(/,/g,' ')}}</p>
                     <p>twits at {{twit.createdAt}}</p>
+                    <button class="ui button negative" v-on:click="deleteTwit(twit._id)"><i class="icon trash"></i>delete</button>
                   </div>
                 </div>
               </div>

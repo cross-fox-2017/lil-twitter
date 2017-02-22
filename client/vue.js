@@ -31,6 +31,12 @@ var app = new Vue({
       .then(function(response){
         app.twits = response.data
       })
+    },
+    deleteTwit: function(id){
+      axios.delete(`http://localhost:3000/api/twits/${id}`)
+      .then(function(){
+        app.listTwit()
+      })
     }
   }
 })

@@ -82,14 +82,26 @@ module.exports = {
         });
     },
     search: function (req, res) {
-        twitModel.find({content: {$regex: new RegExp(req.body.search, "ig")}}, function(err, twits){
-            if (err) {
-                return res.status(500).json({
-                    massage: 'Search does not match any twit',
-                    error: err
-                });
-            }
-            return res.json(twits)
-        })
+        if (req.body.search[0] == '#'){
+            twitModel.find({hashtag: req.body.search}, function(err, twits){
+                if (err) {
+                    return res.status(500).json({
+                        massage: 'Search does not match any twit',
+                        error: err
+                    });
+                }
+                return res.json(twits)
+            })
+        } else {
+            twitModel.find({content: {$regex: new RegExp(req.body.search, "ig")}}, function(err, twits){
+                if (err) {
+                    return res.status(500).json({
+                        massage: 'Search does not match any twit',
+                        error: err
+                    });
+                }
+                return res.json(twits)
+            })
+        }
     }
 };
