@@ -31,11 +31,6 @@ var app = new Vue({
               app.allTweet.push(arrTagTweet[i])
             }
           }
-            // axios.get('http://localhost:3000/tweet/find').then(function(result) {
-            //     app.allTweet = result
-            // }).catch(function(err) {
-            //     console.log(err);
-            // })
         },
         runcreateUser: function() {
             axios.post('http://localhost:3000/user/add', {
@@ -56,7 +51,8 @@ var app = new Vue({
                     dataTweet: app.createTweet.tweet
                 })
                 .then(function(result) {
-                    app.allTweet.unshift(result.data)
+                  app.getAllTweet()
+                    // app.allTweet.unshift(result.data)
                     app.createTweet.tweet = ''
                 })
                 .catch(function(error) {
