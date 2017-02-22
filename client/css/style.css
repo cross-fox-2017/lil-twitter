@@ -1,3 +1,7 @@
 #status-form{
   background-color: rgba(237, 237, 237, 0.32)
 }
+
+.timeline:hover{
+  background-color: rgba(237, 237, 237, 0.32)
+}
