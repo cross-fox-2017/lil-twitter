@@ -54,6 +54,17 @@
                </div>
              </form>
            </div>
+           <div class="row">
+             <div class="input-field col s12">
+                <select multiple id="tag">
+                  <option value="" disabled selected>Choose your tag</option>
+                  <option value="Codes">Codes</option>
+                  <option value="Games">Games</option>
+                  <option value="Jobs">Jobs</option>
+                </select>
+                <label>Tag</label>
+              </div>
+           </div>
           </div>
         </div>
         <!-- input -->
@@ -95,6 +106,7 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $('.modal').modal();
+        $('select').material_select();
         getAllTweet()
       });
 
@@ -129,12 +141,14 @@
       }
 
       function postTweet(){
+        console.log($('#tag').val());
         $.ajax({
           url: "http://localhost:3000/api/tweets",
           type: 'post',
           data: {
             postBy: $('#username').val(),
             title: $('#title').val(),
+            tags: JSON.stringify($('#tag').val()),
             content: $('#content').val()
           },
           success: function( result ) {
@@ -179,11 +193,11 @@
 
       function search(){
         let x = document.getElementById("search").value;
-        console.log('masuk');
-        console.log(x);
-        if (x == null) {
-          getAllTweet()
-        }
+
+        // if input serch empty it will call function getAllTweet to show all data
+        // if (x == null) {
+        //   getAllTweet()
+        // }
 
         $.ajax({
           url: "http://localhost:3000/api/tweets/search",

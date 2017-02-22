@@ -18,12 +18,8 @@ var controllerTweet = {
   },
   /* create new tweet */
   createTweet: function (req, res) {
-    console.log(req.body)
-    var temp = [] || JSON.parse(req.body.tag)
-    console.log(typeof (temp))
-    console.log(temp)
-    // let temp = ['bagus', 'mantap', 'keren']
-    // let arrayTag = JSON.parse(req.body.tag)
+    var temp = JSON.parse(req.body.tags) || []
+
     let newTweet = modelTweet({
       title: req.body.title,
       content: req.body.content,
@@ -33,6 +29,7 @@ var controllerTweet = {
 
     newTweet.save(function (err, data) {
       if (err) throw err
+      console.log(data)
       res.json(data)
     })
   },
