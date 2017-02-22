@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const twittSchema = new Schema({
   content: String,
-  postedBy: String
+  postedBy: String,
+  tags: [String]
 },{
   timestamps: true
 });

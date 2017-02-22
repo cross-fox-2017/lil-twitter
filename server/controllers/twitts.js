@@ -8,6 +8,13 @@ module.exports = {
       res.json(data)
     })
   },
+  searchTwitts: (req,res) => {
+    console.log(req.query.q);
+    Twitt.find({content: {$regex: req.query.q, $options: 'i'}}).sort('date')
+    .then((data) => {
+      res.json(data)
+    })
+  },
   getTwitt: (req,res) => {
     Twitt.find({_id:req.params.id})
     .then((data) => {
@@ -17,7 +24,8 @@ module.exports = {
   postTwitt: (req,res) => {
     let newTwitt = new Twitt({
       content: req.body.content,
-      postedBy: req.body.postedBy
+      postedBy: req.body.postedBy,
+      tags: req.body.content.match(/\S*#(?:\[[^\]]+\]|\S+)/g)
     })
     newTwitt.save()
     .then((data) => {
