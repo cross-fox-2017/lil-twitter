@@ -40,7 +40,7 @@
             <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/-Insert_image_here-.svg/2000px--Insert_image_here-.svg.png" alt=""> -->
           </div>
           <div class="eight wide column">
-            <form class="ui form segment">
+            <form class="ui form stack segment">
 
               <div class="row ui grid">
                 <div class="field eight wide column">
@@ -73,13 +73,15 @@
           <!-- <img :src="house.gambar" alt=""> -->
         </div>
         <div class="eight wide column">
-          <div class="ui segment row grid">
+          <div class="ui segment piled row grid">
             <div class="three wide column">
               <img :src="tweet.avatar_url" alt="">
             </div>
             <div class="ten wide column">
               <h4>{{tweet.username}}</h4>
-              <p style="font-size:16px">{{tweet.content}}</p>
+              <!-- <div>{{{ tweet.content }}}</div> -->
+              <div v-html="tweet.content"></div>
+              <!-- <p v-html="html" style="font-size:16px">{{tweet.content}}</p> -->
               <i class="trash icon" style="color:gray" onclick="hapus()" v-on:click='deleteTweet(tweet._id)' ></i>
 
             </div>
@@ -128,7 +130,7 @@
     var app = new Vue({
       el: '#root',
       data: {
-        // index:'',
+        search: '',
         avatar_url: '',
         username: '',
         content: '',
@@ -140,7 +142,9 @@
             type: 'GET',
             url: 'http://localhost:3000/',
             success: function (data) {
+              console.log(data);
               app.tweets = data
+
             }
           })
         },
@@ -169,7 +173,7 @@
               app.avatar_url= ''
               app.username= ''
               app.content= ''
-              app.tweets.push(data)
+              app.tweets.unshift(data)
 
             }
           })
@@ -190,6 +194,17 @@
       }
     })
     app.loadTweet();
+    // fungsi search di luar
+    function searchHashtag(str) {
+      console.log('jalannnnn');
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/search?q='+str,
+        success: function (data) {
+          app.tweets = data
+        }
+      })
+    }
   </script>
 
 

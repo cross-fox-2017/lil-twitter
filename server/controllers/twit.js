@@ -1,10 +1,19 @@
 const Twit = require('../model/twit');
 module.exports = {
   create : function(req, res, next){
+    var tempContent = req.body.content.split(' ')
+    for (var i = 0; i < tempContent.length; i++) {
+      if(tempContent[i][0]=="#"){
+        var datalagi = tempContent[i]
+        datalagi = datalagi.replace(/#/g, "")
+        tempContent[i]=`<a href="#" onclick="searchHashtag('${datalagi}')">${tempContent[i]}</a>`
+      }
+    }
+
     Twit.create({
       avatar_url     : req.body.avatar_url,
       username     : req.body.username,
-      content    : req.body.content
+      content    : tempContent.toString()
     }, function (err, data){
       res.send(data);
     })
