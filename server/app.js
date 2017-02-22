@@ -25,6 +25,4 @@ app.use(cors())
 app.use('/api/twits', twits);
 app.use('/api/users', users);
 
-app.listen(process.env.PORT, function(){
-  console.log('connected');
-})
+app.listen(process.env.PORT)

@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var twitController = require('../controllers/twitsController.js');
+var twitsController = require('../controllers/twitsController.js');
 
-router.get('/', twitController.list);
-router.get('/:id', twitController.show);
-router.post('/', twitController.create);
-router.put('/:id', twitController.update);
-router.delete('/:id', twitController.remove);
+router.get('/', twitsController.list);
+router.get('/:id', twitsController.show);
+router.post('/', twitsController.create);
+router.put('/:id', twitsController.update);
+router.delete('/:id', twitsController.remove);
 
 module.exports = router;
