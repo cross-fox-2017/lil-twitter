@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="js/index.js">
+
+    </script>
+    <title>Twitta</title>
+  </head>
+  <body>
+    <div id="app" class="container">
+
+      <!-- NAVBAR starts here-->
+      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Twitta!</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">@Mention</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Message</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input  v-model="tweetSearch.tag" class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button v-on:click="searchTweet()" class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin: 0 3px;">Search</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="margin: 0 3px;">Login</button>
+          </form>
+        </div>
+      </nav>
+      <!-- NAVBAR ends here-->
+
+      <div class="row">
+        <div class="col-3">
+          <div class="card" style="width: 17rem;">
+            <img class="card-img-top" src="https://avatars3.githubusercontent.com/u/22527338?v=3&u=68b2a3efb0704b1283f441864a1e6c430935c997&s=400" alt="Card image cap" width="100%" height="100%">
+            <div class="card-block">
+              <h4 class="card-title">Raditya Arya</h4>
+              <h6>@raditya</h6>
+              <p class="card-text">Laper pak</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-9">
+          <!-- body -->
+          <div class="card">
+            <div class="card-block">
+
+              <!-- Create tweet-->
+              <div id="status-form" class="card">
+                <div class="card-block">
+                  <form>
+                    <div class="form-group">
+                      <input v-on:keyup.enter="submit" type="text" class="form-control" id="inputTweet" v-model="tweetCreate.tweet" placeholder="What's Happening?">
+                      <br>
+                      <!-- <button v-on:click="createTweet()" class="btn btn-primary my-2 my-sm-0 float-right" type="submit" style="margin: 3px;">tweet</button> -->
+                      <button v-on:click="createTweet()" type="button" class="btn btn-primary my-2 my-sm-0 float-right">tweet</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <br>
+
+              <!-- Timeline -->
+              <div id="timeline" class="" v-for="tweet in tweets">
+                <div v-bind:id="tweet._id" class="card timeline">
+                  <div class="card-block">
+                      <div class="row">
+                        <div class="col-2">
+                            <img class="card-img-top" v-bind:src="tweet.imageUrl" style="margin: 5px 0px" alt="Card image cap" width="120" height="120">
+                        </div>
+                        <div class="col-10">
+                            <div class="card-block">
+                              <h6 class="card-subtitle mb-2 text-muted">@{{ tweet.username}}</h6>
+                              <p class="card-text">{{ tweet.tweet}}</p>
+                              <a role="button" v-on:click="deleteTweet(tweet._id)" class="card-link float-right">Delete</a>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    data: {
+      tweets : [],
+      createUser: {
+        username: '@raditarya',
+        email: 'arya.raditya26@gmail.com',
+        password: '*********',
+        imageUrl: 'https://avatars3.githubusercontent.com/u/22527338?v=3&u=68b2a3efb0704b1283f441864a1e6c430935c997&s=400'
+      },
+      tweetCreate:{
+        tweet: '',
+        username: 'raditarya',
+        imageUrl: 'https://avatars3.githubusercontent.com/u/22527338?v=3&u=68b2a3efb0704b1283f441864a1e6c430935c997&s=400'
+      },
+      tweetSearch :{
+        tag : ''
+      }
+    },
+    methods: {
+      getTweet: function() {
+        $.ajax({
+          url  : "http://localhost:3000/users",
+          type : "GET",
+          success: function(response) {
+            // console.log(response);
+            app.tweets = response
+          }
+        })
+      },
+
+      createTweet: function() {
+        $.ajax({
+          url  : "http://localhost:3000/users/create",
+          type : "POST",
+          data : {
+            tweet   : app.tweetCreate.tweet,
+            username: 'raditarya',
+            imageurl: 'https://avatars3.githubusercontent.com/u/22527338?v=3&u=68b2a3efb0704b1283f441864a1e6c430935c997&s=400'
+          },
+          success: function( response) {
+            app.tweets.push(response)
+            if (!app.tweets) {
+              app.getTweet()
+            }
+            // reset form
+            app.tweetCreate.tweet = ''
+          }
+        }
+      )},
+
+      deleteTweet : function(id) {
+        $(document).ready(function() {
+          $.ajax({
+            url  :  `http://localhost:3000/users/${id}`,
+            type : "DELETE",
+            success: function(result) {
+              $(`#${id}`).remove()
+            }
+          })
+        })
+      },
+
+      searchTweet : function() {
+        // alert(app.tweetSearch.tag)
+        $(document).ready(function() {
+          $.ajax({
+            url  :  `http://localhost:3000/users`,
+            type : "POST",
+            data : {
+              tag : app.tweetSearch.tag
+            },
+            success: function(result) {
+              console.log(result);
+              app.tweets = result
+            }
+          })
+        })
+      }
+  }
+})
+  app.getTweet()
+  </script>
+</html>
