@@ -2,6 +2,7 @@ var app = new Vue({
   el: '#app',
   data: {
     message: 'Welcome to TweetPedia',
+    allTweet: [],
     createUser: {
       username: '',
       email: '',
@@ -14,6 +15,13 @@ var app = new Vue({
     }
   },
   methods: {
+    getAllTweet: function() {
+      axios.get('http://localhost:3000/tweet/getAll',).then(function(result) {
+        app.allTweet = result
+      }).catch(function(err) {
+          console.log(err);
+      })
+    },
     createUser: function () {
       axios.post('http://localhost:3000/user/add', {
         dataUser: app.createUser,

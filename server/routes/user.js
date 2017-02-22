@@ -7,8 +7,8 @@ router.post('/add', function(req, res, next) {
   var addUser = new modelUser({
     username: req.body.dataUser.username,
     email: req.body.dataUser.email,
-    password: req.body.dataUser.password
-    imageUrl: req.body.dataUser.imageUrl
+    password: req.body.dataUser.password,
+    imageUrl: req.body.dataUser.imageUrl,
     tweetID: []
   })
   addUser.save(function(err, result) {
@@ -16,9 +16,6 @@ router.post('/add', function(req, res, next) {
     else res.send(result)
   })
 });
-
-
-
 
 
 module.exports = router;
