@@ -1,0 +1,62 @@
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+  background-color: white;
+}
+
+.navbar-brand>img {
+    display: block;
+    /* margin-bottom: 20px; */
+    position: relative;
+    top: -15px;
+}
+
+.modal-footer p{
+  float: right;
+}
+.modal-footer span{
+  float: left;
+}
+
+.container #header img{
+  position: relative;
+  left:-60px;
+  top: -15px;
+  width: 1400px;
+  height: 300px;
+}
+
+
+.container #profile img{
+  position: relative;
+  border-radius: 50%;
+  top: -170px;
+  width: 200px;
+  height: 300px;
+}
+
+.container #profile h1{
+  position: relative;
+  top: -180px;
+  left: 60px;
+}
+
+.container #profile span{
+  position: relative;
+  top: -190px;
+  left: 62px;
+}
+.container{
+  background-color: #F5F8FA;
+  width: 1400px;
+}
+
+.thumbnail{
+  position: relative;
+  top: -380px;
+  right: -300px;
+  width: 800px;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}

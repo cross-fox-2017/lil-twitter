@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+
+  <title>lilTwitter</title>
+</head>
+<body>
+  <nav class="navbar navbar-default" class="my-navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="./images/bird.png" alt="bird" width="50px" height="50px" /></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+          <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a></li>
+          <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Messages</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <form class="navbar-form">
+            <input data-toggle="modal" data-target="#tweetModal" type="button" class="form-control" placeholder="Search" value="Tweet" style="color:white;width:100px;background-color:#007FAE">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" id="search" oninput="search_tweet()">
+            </div>
+          </form>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+<div class="container">
+    <div id="header">
+        <img src="./images/header.png" alt="header"/>
+    </div>
+    <div id="profile">
+        <img src="./images/profile.png" alt="" />
+        <h1>Cutie</h1>
+        <span font-size="2px">@cutie</span>
+    </div>
+
+    <div id="list-tweet">
+    </div>
+</div>
+
+
+
+<!-- create tweet modal -->
+<div class="modal fade" id="tweetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create New Tweet</h4>
+</div>
+<div class="modal-body">
+      <form enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="title">
+          </div>
+          <div class="form-group">
+            <label for="Content">Content</label>
+            <textarea class="form-control" type="text" name="content" id="content" placeholder="content"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="Post">Posted by</label>
+            <textarea class="form-control" type="text" name="post" id="post" placeholder="content"></textarea>
+          </div>
+          <button type="button" name="button" class="btn btn-default" onclick="create_tweet()">tweet</button>
+      </form>
+  </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript" src="./js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="./js/script.js"></script>
+  <script src="https://use.fontawesome.com/d434aa32d8.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+</body>
+</html>
