@@ -4,7 +4,8 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 require('dotenv').config()
 
-var twit = require('./routes/twitRoutes');
+var twits = require('./routes/twitsRoutes');
+var users = require('./routes/usersRoutes');
 
 var app = express()
 
@@ -21,7 +22,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
-app.use('/api/twit', twit);
+app.use('/api/twits', twits);
+app.use('/api/users', users);
 
 app.listen(process.env.PORT, function(){
   console.log('connected');
