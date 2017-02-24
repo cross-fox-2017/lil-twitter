@@ -5,7 +5,6 @@ const twittSchema = new Schema({
   twitt: String,
   username:String,
   image:String,
-  tags:[]
 },{
   timestamps: true
 })
